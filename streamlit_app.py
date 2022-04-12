@@ -1,6 +1,6 @@
 import streamlit as st
 import get_cal_report
-import datetime as dt
+import datetime
 from datetime import timedelta
 import jpholiday
 import calendar as cal
@@ -17,8 +17,8 @@ def daterange(_start, _end):
         yield _start + timedelta(n)
 
 def get_time(event):
-    start = dt.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')))
-    end = dt.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
+    start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')))
+    end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
     wark_time = (end-start)/timedelta(hours=1)
     if wark_time>23:                    #23時間以上なら(1日の予定なので)
         wark_time = 8                   #8時間に変更
@@ -52,7 +52,7 @@ user_mail = "nkjmmai@studio-nakaji.com"
 st.title("Nスタアプリ")
 
 # left_column,right_column = st.columns(2)
-today = dt.date.today()
+today = datetime.date.today()
 year = today.year
 
 select_y = st.selectbox(
@@ -65,7 +65,7 @@ select_m = st.selectbox(
 )
 #今月の残り日数を取得
 last_day_num = cal.monthrange(year,today.month)[1]
-last_day = dt.date(year,today.month,last_day_num)
+last_day = datetime.date(year,today.month,last_day_num)
 remaining_days = 0
 for i in daterange(today, last_day):
     remaining_days += check_holiday(i)
