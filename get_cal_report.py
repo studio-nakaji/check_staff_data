@@ -21,7 +21,7 @@ def get_gcal_main(set_year,set_month):
             ]
     
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-    CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret.json'
+    CLIENT_SECRET_FILE = 'client_secret.json'
     
     CAL_ID = id_dict[1]["mai_ID"]
     # set_year = 2022
