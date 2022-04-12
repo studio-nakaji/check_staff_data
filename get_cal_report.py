@@ -21,7 +21,7 @@ def get_gcal_main(set_year,set_month):
             ]
     
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-    CLIENT_SECRET_FILE = 'client_secret.json'
+    CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret.json'
     
     CAL_ID = id_dict[1]["mai_ID"]
     # set_year = 2022
@@ -69,31 +69,11 @@ def get_gcal_main(set_year,set_month):
         if not events:
             print('今後のイベントは見つかりませんでした。')
             return
-
-        # 指定月のイベントの開始・終了・タイトルを出力します
-        summary_dic = {}
-        for event in events:
-            start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')))
-            end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
-            if "summary" in event:
-                summary = event['summary']
-                if "作業meet" not in  summary:
-                    wark_time = (end-start)/datetime.timedelta(hours=1)
-                    if wark_time>23:
-                        wark_time = 5
-                    if summary not in summary_dic:
-                        summary_dic[summary]=wark_time
-                    else:
-                        summary_dic[summary]=summary_dic[summary]+wark_time
-            else:
-                summary = "タイトルなし"
-        
+        else:
+            return events
     except HttpError as error:
         print('エラーが発生しました: %s' % error)
-
-    # for i in summary_dic:
-    #     print(i,f"{summary_dic[i]}時間")
-    return summary_dic
+        return None
     
 if __name__ == '__main__':
     get_gcal_main()
