@@ -59,7 +59,7 @@ if button:
             if count_hour < max_hour:
                 remaining_hour = max_hour-count_hour   #残り日数*8時間　>　残りの時間なら
                 if remaining_days*8 > remaining_hour:
-                    st.write(f"目標の{max_hour}勤務時間まであと{remaining_hour}時間です。")
+                    st.write(f"目標の{max_hour}勤務時間まで+{remaining_hour}時間です。")
                     st.write(f"今月の平日は残り{remaining_days}日です。1日{round(remaining_hour/remaining_days,1)}時間作業する計算ですね。頑張りましょう！")
             elif count_hour < max_hour+10:
                 st.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
