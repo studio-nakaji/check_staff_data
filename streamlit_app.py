@@ -38,7 +38,7 @@ for i in daterange(today, last_day):
 remaining_days += check_holiday(last_day)
 
 work_dic = get_cal_report.get_gcal_main(select_y,select_m)
-button = st.button("舞ちゃんの作業時間を表示")
+button = st.button("作業時間を表示")
 left_column, right_column = st.columns(2)
 max_hour=64
 if button:
