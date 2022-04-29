@@ -24,8 +24,6 @@ def get_gcal_main(set_year,set_month):
     CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret.json'
     
     CAL_ID = id_dict[1]["mai_ID"]
-    # set_year = 2022
-    # set_month = 3
     
     first_hms = "T00:00:00z"                    #0時0分0秒
     last_hms = "T23:59:59z"                     #23時59分59秒
