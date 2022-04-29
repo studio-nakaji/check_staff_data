@@ -7,7 +7,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 def access_spread_sheet(SPREADSHEET_KEY):
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
 
-    #認証情報設定
+    #認証情報設定   
     credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sheets_dir/access_sp_secret.json", scope)
 
     #OAuth2の資格情報を使用してGoogle APIにログインします。
