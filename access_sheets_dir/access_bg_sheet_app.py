@@ -41,7 +41,7 @@ def main():
             st.table(reward_df.style.applymap(color_add,subset=["支払い金額"]))
             sum_df = new_df.join(reward_df)
             sum_df = sum_df.fillna("")
-            st.table(sum_df)
+            # st.table(sum_df)
             csv = sum_df.to_csv().encode('utf-8')
             st.download_button(
                 "ダウンロード",
