@@ -29,10 +29,13 @@ def get_sheet_valus(sp, sh_name):
 #1カット毎の情報を取得→データフレームで返す
 def get_cut_deta(values,unit_price):
     new_columns = values["担当"]        #担当者名を取得
-    values = values.rename(index={"Cut":"Cut番号","上乗":"単価","発注":"発注日","納品":"納品日","報酬":"報酬金額"}) #インデックス名を変更
+    values = values.rename(index={"Cut":"Cut番号","上乗":"単価","%":"手数料(%)","発注":"発注日","納品":"納品日","報酬":"報酬金額"}) #インデックス名を変更
     values = values.drop(["撮出", "L/o in","担当"])                     #不要な行の削除
+    if values['単価'] == "":
+        values['単価'] = 0
     values["単価"] = "¥" + f"{int(int(values['単価'])+unit_price):,}"   #単価を基本単価との合計金額に変更
     values["報酬金額"] = int(values["報酬金額"].replace(",",""))
+    values["手数料(%)"] = str(100-int(values["手数料(%)"]))
     values.name = new_columns               #カラム名を担当者名に変更
     # print(values)
     values = pd.DataFrame(values).T         #行・列を入れ替えてデータフレームに
