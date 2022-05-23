@@ -37,10 +37,10 @@ def main():
         new_df, reward_df = sh.main(SPREADSHEET_KEY,title,worker,month)
         # new_df = new_df.set_index("Cut番号",drop=True)
         if type(new_df)== pd.core.frame.DataFrame:
-            st.table(new_df.style.applymap(color_add,subset=["報酬金額"]))
-            st.table(reward_df.style.applymap(color_add,subset=["支払い金額"]))
-            sum_df = new_df.join(reward_df)
-            sum_df = sum_df.fillna("")
+            st.table(new_df.style.applymap(color_add,subset=["報酬金額"]))      #カット単位の明細を表示
+            st.table(reward_df.style.applymap(color_add,subset=["支払い金額"])) #総額に対する税金明細を表示
+            sum_df = new_df.join(reward_df)         #明細を合体
+            sum_df = sum_df.fillna("")              #NANを空白に変更
             # st.table(sum_df)
             csv = sum_df.to_csv().encode('utf-8')
             st.download_button(

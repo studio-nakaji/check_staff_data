@@ -34,7 +34,7 @@ def get_cut_deta(values,unit_price):
     values["単価"] = "¥" + f"{int(int(values['単価'])+unit_price):,}"   #単価を基本単価との合計金額に変更
     values["報酬金額"] = int(values["報酬金額"].replace(",",""))
     values.name = new_columns               #カラム名を担当者名に変更
-    print(values)
+    # print(values)
     values = pd.DataFrame(values).T         #行・列を入れ替えてデータフレームに
     return values
 
@@ -93,7 +93,8 @@ def main(SPREADSHEET_KEY,title,worker,month):
     for i in range(len(siries_list)):
         new_df = pd.merge(new_df,get_cut_deta(siries_list[i],unit_price), how='outer')
     reward = new_df["報酬金額"].sum()
-    reward_df = pd.DataFrame([[str_3digits(reward),str_3digits(reward*0.1021),str_3digits(reward*0.1),str_3digits(reward-reward*0.1021+reward*0.1)]],columns=["報酬総額","源泉徴収額","消費税額","支払い金額"])
+    #支払いの総額明細データフレーム[報酬総額,源泉徴収額,消費税額,支払い金額]
+    reward_df = pd.DataFrame([[str_3digits(reward),str_3digits(reward*0.1021),str_3digits(reward*0.1),str_3digits(int(reward)-int(reward*0.1021)+int(reward*0.1))]],columns=["報酬総額","源泉徴収額","消費税額","支払い金額"])
     new_df["報酬金額"] = new_df["報酬金額"].map(str_3digits)
     # print(new_df)
     # print(reward_df)
