@@ -2,28 +2,33 @@ import gspread
 import pandas as pd
 
 from oauth2client.service_account import ServiceAccountCredentials
+import streamlit as st
 
-#スプレッドシートへのアクセス
-def access_spread_sheet(SPREADSHEET_KEY):
+#gspreadへのアクセス
+def get_gc():
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-
-    #認証情報設定   
+    #認証情報設定(ローカル)
     credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sheets_dir/access_sp_secret.json", scope)
+    # gspread_key = st.secrets.GoogleSpreadSeetKey
+    # #認証情報設定(クラウド)
+    # credentials = ServiceAccountCredentials.from_json_keyfile_name(gspread_key, scope)
 
     #OAuth2の資格情報を使用してGoogle APIにログインします。
     gc = gspread.authorize(credentials)
-
-    #共有設定したスプレッドシートキーを変数[SPREADSHEET_KEY]に格納する。
-    #(スプレッドシートのURLのxxxxの部分→[〜spreadsheets/d/xxxx/edit〜])
-    # SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'
+    return gc
+#スプレッドシートへのアクセス
+def access_spread_sheet(SPREADSHEET_KEY):
+    #OAuth2の資格情報を使用してGoogle APIにログインします。
+    gc = get_gc()
 
     #スプレッドシートを開く
-    sp = gc.open_by_key(SPREADSHEET_KEY)
-    return sp
+    wb = gc.open_by_key(SPREADSHEET_KEY)
+    return wb
+
 
 #スプレッドシート内の指定の名前を含むシートの[0]番目を取得
-def get_sheet_valus(sp, sh_name):
-    target_sh = [sh for sh in sp.worksheets() if sh_name in sh.title][0]
+def get_sheet_valus(wb, sh_name):
+    target_sh = [sh for sh in wb.worksheets() if sh_name in sh.title][0]
     return target_sh
 
 #1カット毎の情報を取得→データフレームで返す
@@ -37,7 +42,6 @@ def get_cut_deta(values,unit_price):
     values["報酬金額"] = int(values["報酬金額"].replace(",",""))
     values["手数料(%)"] = str(100-int(values["手数料(%)"]))
     values.name = new_columns               #カラム名を担当者名に変更
-    # print(values)
     values = pd.DataFrame(values).T         #行・列を入れ替えてデータフレームに
     return values
 
@@ -45,29 +49,28 @@ def str_3digits(x):
     return "¥" + f"{int(x):,}"
 
 def get_sheets_name(SPREADSHEET_KEY):
-    sp = access_spread_sheet(SPREADSHEET_KEY)
-    sh_list = [sh.title for sh in sp.worksheets()]
-    sh_list.insert(0,"")
-    return sh_list
+    wb = access_spread_sheet(SPREADSHEET_KEY)
+    sh_dic = {}
+    for sh in wb.worksheets():
+        sh_dic[sh.title] = sh
+    return wb , sh_dic
 
-def get_member(SPREADSHEET_KEY,title):
-    sp = access_spread_sheet(SPREADSHEET_KEY)
-    target_sh = get_sheet_valus(sp, title)      #指定の名前のシートを取得
+def get_member(wb,title):
+    target_sh = get_sheet_valus(wb, title)      #指定の名前のシートを取得
     data = target_sh.get_all_values()           #全てのデータを取得
     member_df = pd.DataFrame(data[15:32],columns=data[13])    #15行目〜32行目をデータフレームで取得。13行をカラムに指定
     member_df = member_df.drop(member_df.columns[1:],axis=1)  #4列分を削除
     member = [i for i in sum(member_df.values.tolist(),[]) if i != ""]
-    member.insert(0,"")
     return member
 
 
-def main(SPREADSHEET_KEY,title,worker,month):
+def main(wb,title,worker,month):
     # title = "すずめ"
     # worker = "針﨑"
     # month = 4
 
-    sp = access_spread_sheet(SPREADSHEET_KEY)
-    target_sh = get_sheet_valus(sp, title)      #指定の名前のシートを取得
+    # wb = access_spread_sheet(SPREADSHEET_KEY)
+    target_sh = get_sheet_valus(wb, title)      #指定の名前のシートを取得
 
     data = target_sh.get_all_values()           #全てのデータを取得
     story_num = target_sh.acell("C5")
@@ -98,7 +101,7 @@ def main(SPREADSHEET_KEY,title,worker,month):
     reward = new_df["報酬金額"].sum()
     #支払いの総額明細データフレーム[報酬総額,源泉徴収額,消費税額,支払い金額]
     reward_df = pd.DataFrame([[str_3digits(reward),str_3digits(reward*0.1021),str_3digits(reward*0.1),str_3digits(int(reward)-int(reward*0.1021)+int(reward*0.1))]],columns=["報酬総額","源泉徴収額","消費税額","支払い金額"])
-    new_df["報酬金額"] = new_df["報酬金額"].map(str_3digits)
+    new_df["報酬金額"] = new_df["報酬金額"]
     # print(new_df)
     # print(reward_df)
     # print(member)
