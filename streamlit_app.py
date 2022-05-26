@@ -10,7 +10,7 @@ def main():
     # selection = st.sidebar.radio("Go to",list(contents.keys()))
     # page = contents[selection]
     # page.main()
-    st.write("テスト")
+    st.write("テス")
 
 
 
