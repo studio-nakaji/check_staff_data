@@ -44,8 +44,9 @@ def get_gcal_main(set_year,set_month):
     # 認証フローが初めて完了すると自動的に作成されます。
     # if os.path.exists(secrets_token):
     # if os.path.exists(token.json):
-        # creds = Credentials.from_authorized_user_file(secrets_token, SCOPES)
-    creds = Credentials.from_authorized_user_file(CLIENT_SECRET_FILE, SCOPES)
+        # creds = Credentials.from_authorized_user_file(token.json, SCOPES)
+    
+    creds = Credentials(CLIENT_SECRET_FILE)
     # 使用可能な（有効な）クレデンシャルがない場合は、ユーザーにログインさせます。
     # if not creds or not creds.valid:
     #     print("有効なクレデンシャルがない為、ログインして下さい")
