@@ -23,7 +23,7 @@ def get_gcal_main(set_year,set_month):
     
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
     # CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret_cal.json'
-    CLIENT_SECRET_FILE = st.secrets["GoogleCalenderKey"]
+    secrets = st.secrets["GoogleCalenderKey"]
     
     CAL_ID = id_dict[1]["mai_ID"]
     
@@ -46,7 +46,7 @@ def get_gcal_main(set_year,set_month):
     # if os.path.exists(token.json):
         # creds = Credentials.from_authorized_user_file(token.json, SCOPES)
     
-    creds = Credentials(CLIENT_SECRET_FILE)
+    creds = Credentials(token=secrets["token"],refresh_token=secrets["refresh_token"],id_token=None,token_uri=secrets["token_uri"],client_id=secrets["client_id"],client_secret=secrets["client_secret"],scopes=secrets["scopes"],quota_project_id=secrets["project_id"],expiry=secrets["expiry"])
     # 使用可能な（有効な）クレデンシャルがない場合は、ユーザーにログインさせます。
     # if not creds or not creds.valid:
     #     print("有効なクレデンシャルがない為、ログインして下さい")
