@@ -4,18 +4,19 @@ import pandas as pd
 # from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2 import service_account
 import streamlit as st
+import json
+import toml
 
 #gspreadへのアクセス
 def get_gc():
-    scope = ['https://spreadsheets.google.com/feeds']
-    # ,'https://www.googleapis.com/auth/drive']
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     # 認証情報設定(ローカル)
-    # credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sheets_dir/access_sp_secret.json", scope)
+    # credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sp_secret.json", scope)
     #認証情報設定(クラウド)
     # credentials = ServiceAccountCredentials.from_json_keyfile_name(st.secrets["GoogleSpreadSheetKey"], scope)
-    # ["type","project_id","private_key_id","private_key","client_email","client_id","auth_uri","token_uri","auth_provider_x509_cert_url","client_x509_cert_url"]
-    # credentials = ServiceAccountCredentials(st.secrets["GoogleSpreadSheetKey"]["client_email"],)
-    credentials = service_account.Credentials.from_service_account_info(st.secrets["GoogleSpreadSheetKey"],scope)
+
+    secrets = json.loads(st.secrets["textkey"])
+    credentials = service_account.Credentials.from_service_account_info(secrets)
 
     #OAuth2の資格情報を使用してGoogle APIにログインします。
     gc = gspread.authorize(credentials)
@@ -112,16 +113,18 @@ def main(wb,title,worker,month):
     # print(reward_df)
     # print(member)
     return new_df, reward_df
+
     
 if __name__ == "__main__":
-    title = "すずめ"
-    worker = "針﨑"
-    month = 4
+    # title = "すずめ"
+    # worker = "針﨑"
+    # month = 4
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
-    new_df, reward_df = main(SPREADSHEET_KEY,title,worker,month)
+    # new_df, reward_df = main(SPREADSHEET_KEY,title,worker,month)
     # member,story_num = get_member(SPREADSHEET_KEY,title)
     # print(new_df.set_index("Cut番号",drop=True))
-    
+    wb = access_spread_sheet(SPREADSHEET_KEY)
+    print(wb)
     
     
 
