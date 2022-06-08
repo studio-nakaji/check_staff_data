@@ -18,7 +18,7 @@ def color_add(val):
 
 def main():
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
-    re = sp.get_gc()
+    re = sp.access_spread_sheet(SPREADSHEET_KEY)
     st.write(re)
     # wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
     # title_list = list(title_dic)
