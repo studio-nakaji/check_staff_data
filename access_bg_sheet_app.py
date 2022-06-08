@@ -18,11 +18,12 @@ def color_add(val):
 
 def main():
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
-
-    wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
-    title_list = list(title_dic)
-    title_list = [""]+title_list
-    title = st.selectbox(label="シートを選択してね" ,options= title_list)
+    re = sp.get_gc()
+    st.write(re)
+    # wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
+    # title_list = list(title_dic)
+    # title_list = [""]+title_list
+    # title = st.selectbox(label="シートを選択してね" ,options= title_list)
     
     # if title == "":
     #     st.stop()
