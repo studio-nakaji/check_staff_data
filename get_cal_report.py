@@ -34,25 +34,25 @@ def get_gcal_main(set_year,set_month):
     
     print(f"{set_year}年{set_month}月の合計作業時間")
     
-    #ローカル設定
-    CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/check_staff_data/client_secret_cal.json'
-    creds = None
-    # ファイルtoken.jsonは、ユーザーのアクセストークンと更新トークンを保存し、
-    # 認証フローが初めて完了すると自動的に作成されます。
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    # 使用可能な（有効な）クレデンシャルがない場合は、ユーザーにログインさせます。
-    if not creds or not creds.valid:
-        print("有効なクレデンシャルがない為、ログインして下さい")
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                CLIENT_SECRET_FILE, SCOPES)
-            creds = flow.run_local_server(port=0)
-        # 次の実行のためにクレデンシャルを保存します
-        with open('token.json', 'w') as token:
-            token.write(creds.to_json())
+    # #ローカル設定
+    # CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/check_staff_data/client_secret_cal.json'
+    # creds = None
+    # # ファイルtoken.jsonは、ユーザーのアクセストークンと更新トークンを保存し、
+    # # 認証フローが初めて完了すると自動的に作成されます。
+    # if os.path.exists("token.json"):
+    #     creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+    # # 使用可能な（有効な）クレデンシャルがない場合は、ユーザーにログインさせます。
+    # if not creds or not creds.valid:
+    #     print("有効なクレデンシャルがない為、ログインして下さい")
+    #     if creds and creds.expired and creds.refresh_token:
+    #         creds.refresh(Request())
+    #     else:
+    #         flow = InstalledAppFlow.from_client_secrets_file(
+    #             CLIENT_SECRET_FILE, SCOPES)
+    #         creds = flow.run_local_server(port=0)
+    #     # 次の実行のためにクレデンシャルを保存します
+    #     with open('token.json', 'w') as token:
+    #         token.write(creds.to_json())
     
     #streamlit cloud用設定
     # import toml
