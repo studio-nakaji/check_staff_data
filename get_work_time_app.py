@@ -51,32 +51,33 @@ def main():
 
     st.title("Nスタアプリ")
     
-    events = get_cal_report.get_gcal_main(2022,5)
-    st.write(events)
-    # today = datetime.date.today()
-    # year = today.year
+    today = datetime.date.today()
+    year = today.year
 
-    # select_y = st.selectbox(
-    #     "取得したい年",
-    #     list(range(2022,year+1))
-    # )
-    # select_m = st.selectbox(
-    #     "取得したい月",
-    #     list(range(1,13))
-    # )
-    # #今月の残り日数を取得
-    # last_day_num = cal.monthrange(year,today.month)[1]
-    # last_day = datetime.date(year,today.month,last_day_num)
-    # remaining_days = 0
-    # for i in daterange(today, last_day):
-    #     remaining_days += check_holiday(i)
-    # remaining_days += check_holiday(last_day)
+    select_y = st.selectbox(
+        "取得したい年",
+        list(range(2022,year+1))
+    )
+    select_m = st.selectbox(
+        "取得したい月",
+        list(range(1,13))
+    )
+    #今月の残り日数を取得
+    last_day_num = cal.monthrange(year,today.month)[1]
+    last_day = datetime.date(year,today.month,last_day_num)
+    remaining_days = 0
+    for i in daterange(today, last_day):
+        remaining_days += check_holiday(i)
+    remaining_days += check_holiday(last_day)
 
-    # events = get_cal_report.get_gcal_main(select_y,select_m)
-    # if events != None:
-    #     work_dic = get_events_value(events,user_mail)
-    # else:
-    #     work_dic = None
+    events = get_cal_report.get_gcal_main(select_y,select_m)
+    if events != None:
+        work_dic = get_events_value(events,user_mail)
+    else:
+        work_dic = None
+    st.write(work_dic)
+    # events = get_cal_report.get_gcal_main(2022,5)
+    # st.write(events[0])
 
     # button = st.button("作業時間を見てみましょう")
     # left_column, right_column = st.columns(2)
