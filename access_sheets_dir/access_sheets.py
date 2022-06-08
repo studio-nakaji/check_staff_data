@@ -11,7 +11,7 @@ def get_gc():
     # 認証情報設定(ローカル)
     # credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sheets_dir/access_sp_secret.json", scope)
     #認証情報設定(クラウド)
-    credentials = service_account.Credentials.from_service_account_info(st.secrets["GoogleSpreadSheetKey"])
+    credentials = service_account.Credentials.from_service_account_info(st.secrets["GoogleSpreadSheetKey"],scope)
 
     #OAuth2の資格情報を使用してGoogle APIにログインします。
     gc = gspread.authorize(credentials)
