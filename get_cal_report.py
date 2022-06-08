@@ -11,6 +11,8 @@ from googleapiclient.errors import HttpError
 import calendar as cal
 import streamlit as st
 
+import toml
+
 
 
 def get_gcal_main(set_year,set_month):
@@ -22,8 +24,7 @@ def get_gcal_main(set_year,set_month):
             ]
     
     SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
-    # CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret_cal.json'
-    secrets = st.secrets["GoogleCalenderKey"]
+    
     
     CAL_ID = id_dict[1]["mai_ID"]
     
@@ -38,15 +39,14 @@ def get_gcal_main(set_year,set_month):
     last_day = str(last_dayonly) + last_hms                         #指定のフォーマットに
     
     print(f"{set_year}年{set_month}月の合計作業時間")
-    creds = None
     
+    #ローカル設定
+    # CLIENT_SECRET_FILE = '/Volumes/GoogleDrive/マイドライブ/MyScript/My_Python/Nstudio/client_secret_cal.json'
+    # creds = None
     # ファイルtoken.jsonは、ユーザーのアクセストークンと更新トークンを保存し、
     # 認証フローが初めて完了すると自動的に作成されます。
-    # if os.path.exists(secrets_token):
-    # if os.path.exists(token.json):
-        # creds = Credentials.from_authorized_user_file(token.json, SCOPES)
-    
-    creds = Credentials(token=secrets["token"],refresh_token=secrets["refresh_token"],id_token=None,token_uri=secrets["token_uri"],client_id=secrets["client_id"],client_secret=secrets["client_secret"],scopes=secrets["scopes"],quota_project_id=secrets["project_id"],expiry=secrets["expiry"])
+    # if os.path.exists("token.json"):
+        # creds = Credentials.from_authorized_user_file("token.json", SCOPES)
     # 使用可能な（有効な）クレデンシャルがない場合は、ユーザーにログインさせます。
     # if not creds or not creds.valid:
     #     print("有効なクレデンシャルがない為、ログインして下さい")
@@ -59,6 +59,13 @@ def get_gcal_main(set_year,set_month):
     #     # 次の実行のためにクレデンシャルを保存します
     #     with open('token.json', 'w') as token:
     #         token.write(creds.to_json())
+    
+    #streamlit cloud用設定
+    # with open("secrets.toml") as f:
+    #     secrets = toml.load(f)["GoogleCalenderKey"]
+    secrets = st.secrets["GoogleCalenderKey"]
+    #secretsからクレデンシャルオブジェクトを作成
+    creds = Credentials.from_authorized_user_info(secrets, SCOPES)
 
     try:
         service = build('calendar', 'v3', credentials=creds)
@@ -79,5 +86,7 @@ def get_gcal_main(set_year,set_month):
         print('エラーが発生しました: %s' % error)
         return None
     
+    
 if __name__ == '__main__':
-    get_gcal_main()
+    print(get_gcal_main(2022,5))
+    # test()
