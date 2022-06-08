@@ -7,10 +7,14 @@ import streamlit as st
 
 #gspreadへのアクセス
 def get_gc():
-    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    scope = ['https://spreadsheets.google.com/feeds']
+    # ,'https://www.googleapis.com/auth/drive']
     # 認証情報設定(ローカル)
     # credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sheets_dir/access_sp_secret.json", scope)
     #認証情報設定(クラウド)
+    # credentials = ServiceAccountCredentials.from_json_keyfile_name(st.secrets["GoogleSpreadSheetKey"], scope)
+    # ["type","project_id","private_key_id","private_key","client_email","client_id","auth_uri","token_uri","auth_provider_x509_cert_url","client_x509_cert_url"]
+    # credentials = ServiceAccountCredentials(st.secrets["GoogleSpreadSheetKey"]["client_email"],)
     credentials = service_account.Credentials.from_service_account_info(st.secrets["GoogleSpreadSheetKey"],scope)
 
     #OAuth2の資格情報を使用してGoogle APIにログインします。
