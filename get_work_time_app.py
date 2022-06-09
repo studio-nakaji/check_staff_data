@@ -122,13 +122,14 @@ def main():
                 else:                                       #作業時間が目標+10時間以上の時
                     st.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
                 
-                # st.multiselect("合計したい予定を選択",work_types)
+                multi_work_type = st.multiselect("合計したい予定を選択",work_types)
             else:
                 month = select_m
                 if count_hour == 0:
                     f"{month}月はご活躍されてないようですね。今後に期待しています！"
                 else:
                     st.write(f"{month}月は{count_hour}時間作業されたのですね。")
+                    st.write("お疲れ様でした！")
                     if count_hour < max_hour:                   #作業時間が目標以下の時
                         remaining_hour = max_hour-count_hour    #残り日数*8時間　>　残りの時間なら
                         st.write(f"目標の{max_hour}時間まであと{remaining_hour}時間でした。")
@@ -136,7 +137,6 @@ def main():
                         st.write(f"目標を{count_hour-max_hour}時間超えていたようです。頑張ったんですね！")
                     else:                                       #作業時間が目標+10時間以上の時
                         st.write(f"目標を{count_hour-max_hour}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
-                    st.write("お疲れ様でした！")
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
