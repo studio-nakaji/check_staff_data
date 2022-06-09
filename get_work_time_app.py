@@ -84,7 +84,7 @@ def main():
 
     left_column, right_column = ex1.columns(2)
     max_hour=64
-    if button:
+    if button or len(list(work_dic))>0:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
             work_types.clear()
