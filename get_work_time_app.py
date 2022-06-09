@@ -126,6 +126,10 @@ def main():
                     ex1.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
                 else:                                       #作業時間が目標+10時間以上の時
                     ex1.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
+                # st.stop()
+
+                ex2 = st.expander("選択した項目の合計時間を表示")
+                multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
                 
             else:
                 month = select_m
@@ -144,10 +148,6 @@ def main():
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
-        st.stop()
-
-    ex2 = st.expander("選択した項目の合計時間を表示")
-    multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
 
 @st.cache(allow_output_mutation=True)
 def cache_lst():
