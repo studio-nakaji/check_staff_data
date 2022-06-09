@@ -156,13 +156,13 @@ def main():
             for i in multi_work_type:
                 total += work_dic[i]
             ex2.write(f"合計時間は[{total}]時間です！")
-            col_1,col_2 = ex2.columns(2)
-            time_money=col_1.checkbox("時給換算")
+            # col_1,col_2 = ex2.columns(2)
+            time_money=ex2.checkbox("時給換算")
             if time_money:
                 total_money=int(total*1300)
                 consumption_tax = int(total_money*0.1)
                 Withholding_tax = int(total_money*0.1021)
-                ex3 = col_2.expander("")
+                ex3 = ex2.expander("時給換算")
                 ex3.write(f"時給合計:{total_money}")
                 ex3.write(f"+消費税{consumption_tax}")
                 ex3.write(f"-源泉徴収税{Withholding_tax}")
