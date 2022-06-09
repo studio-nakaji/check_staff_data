@@ -1,5 +1,3 @@
-from filecmp import clear_cache
-from functools import cache
 import streamlit as st
 import get_cal_report
 import datetime
@@ -77,11 +75,10 @@ def main():
     else:
         work_dic = None
 
-    # work_types = cache_lst()
     
     work_types = []
     ex1 = st.expander("作業時間一覧")
-    button = ex1.button("作業時間を見てみましょう",on_click=clear_cache)
+    button = ex1.button("作業時間を見てみましょう")
 
     left_column, right_column = ex1.columns(2)
     max_hour=64
@@ -151,7 +148,6 @@ def main():
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
 
-# @st.cache(allow_output_mutation=True)
-# def cache_lst():
-#     lst = []
-#     return lst
+def cache_lst():
+    lst = []
+    return lst
