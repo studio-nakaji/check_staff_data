@@ -159,10 +159,14 @@ def main():
             col_1,col_2 = ex2.columns(2)
             time_money=col_1.checkbox("時給換算")
             if time_money:
-                total_money=total*1300
+                total_money=int(total*1300)
                 consumption_tax = int(total_money*0.1)
                 Withholding_tax = int(total_money*0.1021)
-                col_2.write(f"時給合計{total_money}+消費税{consumption_tax}-源泉徴収税{Withholding_tax}=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
+                ex3 = col_2.expander("")
+                ex3.write(f"時給合計:{total_money}")
+                ex3.write(f"+消費税{consumption_tax}")
+                ex3.write(f"-源泉徴収税{Withholding_tax}")
+                ex3.write(f"=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
