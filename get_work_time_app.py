@@ -150,7 +150,7 @@ def main():
         ex2 = st.expander("選択した項目の合計時間を表示")
         multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
         
-@st.experimental_memo
+@st.cache
 def cache_lst(lst):
     # lst = []
     return lst
