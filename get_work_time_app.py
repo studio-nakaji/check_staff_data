@@ -78,10 +78,6 @@ def main():
     else:
         work_dic = None
 
-    
-    # button = ex1.button("作業時間を見てみましょう")
-    st.write("作業時間はこちらですね")
-
     left_column, right_column = ex1.columns(2)
     max_hour=64
     if len(list(work_dic))>0:
@@ -124,8 +120,6 @@ def main():
                     ex1.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
                 else:                                       #作業時間が目標+10時間以上の時
                     ex1.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
-                # st.stop()
-
                 
             else:
                 month = select_m
@@ -158,12 +152,8 @@ def main():
                 consumption_tax = int(total_money*0.1)
                 Withholding_tax = int(total_money*0.1021)
                 ex2.write(f"時給合計:{total_money}+消費税:{consumption_tax}+源泉徴収税:-{Withholding_tax}")
-                ex2.write(f"= 合計 {str_3digits(total_money+consumption_tax-Withholding_tax)} になりますね")
+                ex2.write(f"= 合計 {str_3digits(total_money+consumption_tax-Withholding_tax)} 分になりますね")
         
-# @st.cache(allow_output_mutation=True)
-# def cache_lst():
-#     lst = []
-#     return lst
 
 @st.cache(allow_output_mutation=True)
 def cache_dic():
