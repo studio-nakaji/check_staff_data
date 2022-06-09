@@ -81,15 +81,18 @@ def main():
     if button:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
+            work_types = []
             for i in work_dic:
                 if "予定" not in i:
                     left_column.write(f"[{i}]を")
                     right_column.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
+                    work_types.append(i)
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
-                    
+            
+            #作業時間/目標時間をプログレスバーで表示
             bar = st.progress(0)
             wariai = round(count_hour/max_hour*100)
             if wariai < 100:
@@ -118,6 +121,8 @@ def main():
                     st.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
                 else:                                       #作業時間が目標+10時間以上の時
                     st.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
+                
+                # st.multiselect("合計したい予定を選択",work_types)
             else:
                 month = select_m
                 if count_hour == 0:
