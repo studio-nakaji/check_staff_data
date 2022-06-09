@@ -151,7 +151,7 @@ def main():
         multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
         
 @st.cache()
-def cache_lst():
-    lst = []
+def cache_lst(lst):
+    # lst = []
     return lst
 
