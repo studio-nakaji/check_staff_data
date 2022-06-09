@@ -50,14 +50,15 @@ def main():
 
     st.title("Nスタアプリ")
     
+    ex1 = st.expander("一覧を取得")
     today = datetime.date.today()
     year = today.year
 
-    select_y = st.selectbox(
+    select_y = ex1.selectbox(
         "取得したい年",
         list(range(2022,year+1))
     )
-    select_m = st.selectbox(
+    select_m = ex1.selectbox(
         "取得したい月",
         list(range(1,13))
     )
@@ -69,6 +70,9 @@ def main():
         remaining_days += check_holiday(i)
     remaining_days += check_holiday(last_day)
 
+    work_types = cache_lst()
+    work_dic = cache_dic()
+    work_dic.clear()
     events = get_cal_report.get_gcal_main(select_y,select_m)
     if events != None:
         work_dic = get_events_value(events,user_mail)
@@ -76,8 +80,6 @@ def main():
         work_dic = None
 
     
-    work_types = cache_lst()
-    ex1 = st.expander("作業時間一覧")
     button = ex1.button("作業時間を見てみましょう")
 
     left_column, right_column = ex1.columns(2)
@@ -148,11 +150,17 @@ def main():
     if len(work_types) > 0:
         st.write(work_types)
         ex2 = st.expander("選択した項目の合計時間を表示")
-        multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
+        multi_work_type = ex2.multiselect(label="予定を選択",options=work_types)
+        ex2.write(work_dic)
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
     lst = []
     return lst
+
+@st.cache(allow_output_mutation=True)
+def cache_dic():
+    dic = {}
+    return dic
 
 
