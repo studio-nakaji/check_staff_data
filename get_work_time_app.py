@@ -95,6 +95,7 @@ def main():
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
+            work_types.clear()
             work_types = cache_lst()
             
             #作業時間/目標時間をプログレスバーで表示
