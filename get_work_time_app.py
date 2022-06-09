@@ -70,7 +70,6 @@ def main():
         remaining_days += check_holiday(i)
     remaining_days += check_holiday(last_day)
 
-    work_types = cache_lst()
     work_dic = cache_dic()
     work_dic.clear()
     events = get_cal_report.get_gcal_main(select_y,select_m)
@@ -88,17 +87,14 @@ def main():
     if len(list(work_dic))>0:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
-            work_types.clear()
             for i in work_dic:
                 if "予定" not in i:
                     left_column.write(f"[{i}]を")
                     right_column.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
-                    work_types.append(i)
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
-            work_types = cache_lst()
             
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
@@ -156,25 +152,23 @@ def main():
             for i in multi_work_type:
                 total += work_dic[i]
             ex2.write(f"合計時間は[{total}]時間です！")
-            # col_1,col_2 = ex2.columns(2)
             time_money=ex2.checkbox("時給換算")
             if time_money:
                 total_money=int(total*1300)
                 consumption_tax = int(total_money*0.1)
                 Withholding_tax = int(total_money*0.1021)
-                ex2.write(f"時給合計:{total_money}")
-                ex2.write(f"+消費税{consumption_tax}")
-                ex2.write(f"-源泉徴収税{Withholding_tax}")
-                ex2.write(f"=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
+                ex2.write(f"時給合計:{total_money}+消費税:{consumption_tax}+源泉徴収税:-{Withholding_tax}")
+                ex2.write(f"= 合計 ¥{str_3digits(total_money+consumption_tax-Withholding_tax)} になりますね")
         
-@st.cache(allow_output_mutation=True)
-def cache_lst():
-    lst = []
-    return lst
+# @st.cache(allow_output_mutation=True)
+# def cache_lst():
+#     lst = []
+#     return lst
 
 @st.cache(allow_output_mutation=True)
 def cache_dic():
     dic = {}
     return dic
 
-
+def str_3digits(x):
+    return "¥" + f"{int(x):,}"
