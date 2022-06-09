@@ -82,7 +82,6 @@ def main():
 
     left_column, right_column = ex1.columns(2)
     max_hour=64
-    
     if button:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
@@ -96,7 +95,7 @@ def main():
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
-            ws = cache_lst(work_types)
+            work_types = cache_lst(work_types)
             
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
@@ -146,10 +145,10 @@ def main():
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
-    if len(ws) > 0:
-        st.write(ws)
+    if len(work_types) > 0:
+        st.write(work_types)
         ex2 = st.expander("選択した項目の合計時間を表示")
-        multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=ws)
+        multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
         
 @st.experimental_memo
 def cache_lst(lst):
