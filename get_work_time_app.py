@@ -150,8 +150,11 @@ def main():
     if len(list(work_dic)) > 0:
         ex2 = st.expander("選択した項目の合計時間を表示")
         multi_work_type = ex2.multiselect(label="予定を選択",options=list(work_dic))
-        
-        ex2.write(multi_work_type)
+        if len(multi_work_type)>0:
+            total = 0
+            for i in multi_work_type:
+                total += work_dic[i]
+            ex2.write(f"合計時間は[{total}]時間です！")
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
