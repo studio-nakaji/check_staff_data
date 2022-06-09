@@ -156,6 +156,13 @@ def main():
             for i in multi_work_type:
                 total += work_dic[i]
             ex2.write(f"合計時間は[{total}]時間です！")
+            col_1,col_2 = ex2.columns(2)
+            time_money=col_1.checkbox("時給換算")
+            if time_money:
+                total_money=total*1300
+                consumption_tax = int(total_money*0.1)
+                Withholding_tax = int(total_money*0.1021)
+                col_2.write(f"時給合計{total_money}+消費税{consumption_tax}-源泉徴収税{Withholding_tax}=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
