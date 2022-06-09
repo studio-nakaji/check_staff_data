@@ -78,10 +78,11 @@ def main():
     button = st.button("作業時間を見てみましょう")
     left_column, right_column = st.columns(2)
     max_hour=64
+    
+    work_types = cache_lst()
     if button:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
-            work_types = []
             for i in work_dic:
                 if "予定" not in i:
                     left_column.write(f"[{i}]を")
@@ -143,3 +144,7 @@ def main():
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
 
 
+@st.cache(allow_output_mutation=True)
+def cache_lst():
+    lst = []
+    return lst
