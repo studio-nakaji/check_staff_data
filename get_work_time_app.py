@@ -151,7 +151,7 @@ def main():
         ex2 = st.expander("選択した項目の合計時間を表示")
         ex2.write(work_types)
         multi_work_type = ex2.multiselect(label="予定を選択",options=work_types)
-        ex2.write(work_dic.keys())
+        ex2.write(list(work_dic))
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
