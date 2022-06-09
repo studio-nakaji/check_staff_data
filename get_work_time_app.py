@@ -96,7 +96,7 @@ def main():
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
-            cache_lst(work_types)
+            ws = cache_lst(work_types)
             
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
@@ -147,11 +147,13 @@ def main():
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
     if len(work_types) > 0:
+        st.write(ws)
         ex2 = st.expander("選択した項目の合計時間を表示")
         multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
         
-@st.cache()
+@st.experimental_memo
 def cache_lst(lst):
     # lst = []
     return lst
+
 
