@@ -85,17 +85,16 @@ def main():
     if button:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
+            work_types.clear()
             for i in work_dic:
                 if "予定" not in i:
                     left_column.write(f"[{i}]を")
                     right_column.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
-                    
                     work_types.append(i)
                 else:
                     left_column.write(f"[{i}]が")
                     right_column.write(f"{work_dic[i]}時間")
-            work_types.clear()
             work_types = cache_lst()
             
             #作業時間/目標時間をプログレスバーで表示
