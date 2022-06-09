@@ -75,8 +75,9 @@ def main():
     else:
         work_dic = None
 
-    button = st.button("作業時間を見てみましょう")
-    left_column, right_column = st.columns(2)
+    ex1 = st.expander("作業時間一覧")
+    button = ex1.button("作業時間を見てみましょう")
+    left_column, right_column = ex1.columns(2)
     max_hour=64
     
     work_types = cache_lst()
@@ -94,7 +95,7 @@ def main():
                     right_column.write(f"{work_dic[i]}時間")
             
             #作業時間/目標時間をプログレスバーで表示
-            bar = st.progress(0)
+            bar = ex1.progress(0)
             wariai = round(count_hour/max_hour*100)
             if wariai < 100:
                 for i in range(wariai):
@@ -105,7 +106,6 @@ def main():
                     time.sleep(0.003)
                     bar.progress(round(i+1))
             time.sleep(0.05)
-            ex1 = st.expander("作業時間一覧")
             if today.month == select_m:
                 ex1.write(f"今月は{count_hour}時間作業されたのですね！")
                 ex1.write("")
@@ -137,12 +137,13 @@ def main():
                         ex1.write(f"目標を{count_hour-max_hour}時間超えていたようです。頑張ったんですね！")
                     else:                                       #作業時間が目標+10時間以上の時
                         ex1.write(f"目標を{count_hour-max_hour}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
-            ex2 = st.expander("選択した項目の合計時間を表示")
-            multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
+        st.stop()
 
+    ex2 = st.expander("選択した項目の合計時間を表示")
+    multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
 
 @st.cache(allow_output_mutation=True)
 def cache_lst():
