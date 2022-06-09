@@ -146,10 +146,10 @@ def main():
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
-    if len(work_types) > 0:
+    if len(ws) > 0:
         st.write(ws)
         ex2 = st.expander("選択した項目の合計時間を表示")
-        multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
+        multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=ws)
         
 @st.experimental_memo
 def cache_lst(lst):
