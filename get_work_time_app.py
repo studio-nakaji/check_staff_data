@@ -1,3 +1,5 @@
+from filecmp import clear_cache
+from functools import cache
 import streamlit as st
 import get_cal_report
 import datetime
@@ -75,12 +77,13 @@ def main():
     else:
         work_dic = None
 
+    work_types = cache_lst()
     ex1 = st.expander("作業時間一覧")
-    button = ex1.button("作業時間を見てみましょう")
+    button = ex1.button("作業時間を見てみましょう",on_click=clear_cache)
+
     left_column, right_column = ex1.columns(2)
     max_hour=64
     
-    work_types = cache_lst()
     if button:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
@@ -89,6 +92,7 @@ def main():
                     left_column.write(f"[{i}]を")
                     right_column.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
+                    
                     work_types.append(i)
                 else:
                     left_column.write(f"[{i}]が")
