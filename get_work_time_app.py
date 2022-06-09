@@ -80,11 +80,12 @@ def main():
         work_dic = None
 
     
-    button = ex1.button("作業時間を見てみましょう")
+    # button = ex1.button("作業時間を見てみましょう")
+    st.write("作業時間はこちらですね")
 
     left_column, right_column = ex1.columns(2)
     max_hour=64
-    if button or len(list(work_dic))>0:
+    if len(list(work_dic))>0:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
             work_types.clear()
