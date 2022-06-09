@@ -104,39 +104,40 @@ def main():
                     time.sleep(0.003)
                     bar.progress(round(i+1))
             time.sleep(0.05)
-                
+            ex1 = st.expander("作業時間一覧")
             if today.month == select_m:
-                st.write(f"今月は{count_hour}時間作業されたのですね！")
-                st.write("")
+                ex1.write(f"今月は{count_hour}時間作業されたのですね！")
+                ex1.write("")
                 if count_hour < max_hour:                   #作業時間が目標以下の時
                     remaining_hour = max_hour-count_hour    #残り日数*8時間　>　残りの時間なら
                     if remaining_days*8 > remaining_hour:
-                        st.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
-                        st.write(f"今月の平日はあと{remaining_days}日なので・・・、")
-                        st.write(f"1日{round(remaining_hour/remaining_days,1)}時間作業すれば達成ということですね！　頑張っていきましょう！")
+                        ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
+                        ex1.write(f"今月の平日はあと{remaining_days}日なので・・・、")
+                        ex1.write(f"1日{round(remaining_hour/remaining_days,1)}時間作業すれば達成ということですね！　頑張っていきましょう！")
                     else:
-                        st.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
-                        st.write(f"今月の平日はあと{remaining_days}日。{round(remaining_hour/remaining_days,1)}時間/1日作業。大変ですね。。")
+                        ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
+                        ex1.write(f"今月の平日はあと{remaining_days}日。{round(remaining_hour/remaining_days,1)}時間/1日作業。大変ですね。。")
                 elif count_hour < max_hour+10:              #作業時間が目標+10時間以内の時
-                    st.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
+                    ex1.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
                 else:                                       #作業時間が目標+10時間以上の時
-                    st.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
+                    ex1.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
                 
             else:
                 month = select_m
                 if count_hour == 0:
                     f"{month}月はご活躍されてないようですね。今後に期待しています！"
                 else:
-                    st.write(f"{month}月は{count_hour}時間作業されたのですね。")
-                    st.write("お疲れ様でした！")
+                    ex1.write(f"{month}月は{count_hour}時間作業されたのですね。")
+                    ex1.write("お疲れ様でした！")
                     if count_hour < max_hour:                   #作業時間が目標以下の時
                         remaining_hour = max_hour-count_hour    #残り日数*8時間　>　残りの時間なら
-                        st.write(f"目標の{max_hour}時間まであと{remaining_hour}時間でした。")
+                        ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間でした。")
                     elif count_hour < max_hour+10:              #作業時間が目標+10時間以内の時
-                        st.write(f"目標を{count_hour-max_hour}時間超えていたようです。頑張ったんですね！")
+                        ex1.write(f"目標を{count_hour-max_hour}時間超えていたようです。頑張ったんですね！")
                     else:                                       #作業時間が目標+10時間以上の時
-                        st.write(f"目標を{count_hour-max_hour}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
-            multi_work_type = st.multiselect(label="合計したい予定を選択",options=work_types)
+                        ex1.write(f"目標を{count_hour-max_hour}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
+            ex2 = st.expander("選択した項目の合計時間を表示")
+            multi_work_type = ex2.multiselect(label="合計したい予定を選択",options=work_types)
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
