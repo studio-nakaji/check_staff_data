@@ -162,11 +162,10 @@ def main():
                 total_money=int(total*1300)
                 consumption_tax = int(total_money*0.1)
                 Withholding_tax = int(total_money*0.1021)
-                ex3 = ex2.expander("時給換算")
-                ex3.write(f"時給合計:{total_money}")
-                ex3.write(f"+消費税{consumption_tax}")
-                ex3.write(f"-源泉徴収税{Withholding_tax}")
-                ex3.write(f"=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
+                ex2.write(f"時給合計:{total_money}")
+                ex2.write(f"+消費税{consumption_tax}")
+                ex2.write(f"-源泉徴収税{Withholding_tax}")
+                ex2.write(f"=合計¥{total_money+consumption_tax-Withholding_tax}ですね")
         
 @st.cache(allow_output_mutation=True)
 def cache_lst():
