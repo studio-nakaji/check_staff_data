@@ -77,7 +77,8 @@ def main():
     else:
         work_dic = None
 
-    work_types = cache_lst()
+    # work_types = cache_lst()
+    work_types = []
     ex1 = st.expander("作業時間一覧")
     button = ex1.button("作業時間を見てみましょう",on_click=clear_cache)
 
@@ -149,7 +150,7 @@ def main():
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
 
-@st.cache(allow_output_mutation=True)
-def cache_lst():
-    lst = []
-    return lst
+# @st.cache(allow_output_mutation=True)
+# def cache_lst():
+#     lst = []
+#     return lst
