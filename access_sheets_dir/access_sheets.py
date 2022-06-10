@@ -13,7 +13,7 @@ def get_gc():
     #     secrets = toml.load(f)["GoogleSpreadSheetKey"]
     
     #認証情報設定(クラウド)
-    secrets = st.secrets["textkey"]
+    secrets = st.secrets["GoogleSpreadSheetKey"]
     
     credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
     #OAuth2の資格情報を使用してGoogle APIにログインします。
