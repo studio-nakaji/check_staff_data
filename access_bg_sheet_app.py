@@ -306,10 +306,10 @@ def member_name():
     return worker_dic
  
 if __name__ == "__main__":
-    # main()
-    title = "Tv_すずめの戸締まり#A"
+    main()
+    # title = "Tv_すずめの戸締まり#A"
     # title = "その他依頼"
-    year = 2022
-    month = 5
-    save_pdf2(title,year,month)
+    # year = 2022
+    # month = 5
+    # save_pdf2(title,year,month)
     

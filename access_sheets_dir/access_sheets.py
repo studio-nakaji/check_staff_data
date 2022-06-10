@@ -4,23 +4,23 @@ import pandas as pd
 # from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2 import service_account
 import streamlit as st
-import json
-import toml
 
 #gspreadへのアクセス
 def get_gc():
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     # 認証情報設定(ローカル)
-    # credentials = ServiceAccountCredentials.from_json_keyfile_name("access_sp_secret.json", scope)
+    # with open("../secrets.toml") as f:
+    #     secrets = toml.load(f)["GoogleSpreadSheetKey"]
+    
     #認証情報設定(クラウド)
-    # credentials = ServiceAccountCredentials.from_json_keyfile_name(st.secrets["GoogleSpreadSheetKey"], scope)
-
-    secrets = json.loads(st.secrets["textkey"])
-    credentials = service_account.Credentials.from_service_account_info(secrets)
-
+    secrets = st.secrets["textkey"]
+    
+    credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
     #OAuth2の資格情報を使用してGoogle APIにログインします。
     gc = gspread.authorize(credentials)
+    
     return gc
+
 #スプレッドシートへのアクセス
 def access_spread_sheet(SPREADSHEET_KEY):
     #OAuth2の資格情報を使用してGoogle APIにログインします。
@@ -28,6 +28,7 @@ def access_spread_sheet(SPREADSHEET_KEY):
 
     #スプレッドシートを開く
     wb = gc.open_by_key(SPREADSHEET_KEY)
+    
     return wb
 
 
