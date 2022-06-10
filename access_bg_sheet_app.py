@@ -18,27 +18,29 @@ def color_add(val):
 
 def main():
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
-    re = sp.access_spread_sheet(SPREADSHEET_KEY)
-    st.write(re)
-    # wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
-    # title_list = list(title_dic)
-    # title_list = [""]+title_list
-    # title = st.selectbox(label="シートを選択してね" ,options= title_list)
+    # re = sp.access_spread_sheet(SPREADSHEET_KEY)
+    # st.write(re)
     
-    # if title == "":
-    #     st.stop()
-    # today = datetime.datetime.today()
-    # year = today.year
-    # left_col,right_col = st.columns(2)
+    wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
+    title_list = list(title_dic)
+    title_list = [""]+title_list
+    title = st.selectbox(label="シートを選択してね" ,options= title_list)
     
-    # default_month = today.month-1
-    # if today.day<10:
-    #     default_month = default_month-1
-    # if default_month <= 0:
-    #     default_month = 1
-    # select_year = left_col.selectbox("取得したい年は？",list(range(2022,year+1)))
-    # month = right_col.selectbox("取得したい月は？",range(1,13),index=default_month)
-    # if st.button("全スタッフ分をPDF出力しましょう！"):
+    if title == "":
+        st.stop()
+    today = datetime.datetime.today()
+    year = today.year
+    left_col,right_col = st.columns(2)
+    
+    default_month = today.month-1
+    if today.day<10:
+        default_month = default_month-1
+    if default_month <= 0:
+        default_month = 1
+    select_year = left_col.selectbox("取得したい年は？",list(range(2022,year+1)))
+    month = right_col.selectbox("取得したい月は？",range(1,13),index=default_month)
+    if st.button("全スタッフ分をPDF出力しましょう！"):
+        st.write("出力がスタートされる")
     #     save_pdf(st, title,select_year,month)
         
     ##旧バージョン(個別にcsv書き出し)
