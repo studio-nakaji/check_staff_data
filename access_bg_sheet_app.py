@@ -41,7 +41,8 @@ def main():
     st.write(drive)
     if st.button("全スタッフ分をPDF出力しましょう！"):
         st.write("出力がスタートされる")
-        ad.get_files_list(drive, "0ALoDSiRif-lvUk9PVA", "1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY")
+        l = ad.get_files_list(drive, "0ALoDSiRif-lvUk9PVA", "1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY")
+        st.write(l)
     #     save_pdf(st, title,select_year,month)
         
     ##旧バージョン(個別にcsv書き出し)
