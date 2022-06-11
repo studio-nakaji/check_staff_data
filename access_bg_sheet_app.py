@@ -18,8 +18,6 @@ def color_add(val):
 
 def main():
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
-    # re = sp.access_spread_sheet(SPREADSHEET_KEY)
-    # st.write(re)
     
     wb, title_dic = sp.get_sheets_name(SPREADSHEET_KEY)
     title_list = list(title_dic)
@@ -40,10 +38,9 @@ def main():
     select_year = left_col.selectbox("取得したい年は？",list(range(2022,year+1)))
     month = right_col.selectbox("取得したい月は？",range(1,13),index=default_month)
     
-    drive = ad.get_drive()
-    st.write(drive)
     if st.button("全スタッフ分をPDF出力しましょう！"):
         st.write("出力がスタートされる")
+        ad.create_folder(ad.get_drive(),"1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY","テスト")
     #     save_pdf(st, title,select_year,month)
         
     ##旧バージョン(個別にcsv書き出し)
@@ -85,7 +82,7 @@ def save_pdf(st, title,year,month):
     progress_num = 0
     bar = st.progress(progress_num)
     now_progress = st.empty()
-            
+    
     #「背景スケジュールまとめ」スプレッドシートID
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'
     #経理ドライブ/支払い明細書の親フォルダID
