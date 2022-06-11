@@ -13,8 +13,8 @@ def get_drive():
     # 認証(ローカル)
     # gauth.LoadCredentialsFile("mycreds.txt")
     # 認証(クラウド)
-    # gauth.LoadCredentialsFile("setting.yaml")
-    gauth.LoadCredentialsFile(st.secrets["GoogleSpreadSheetKey"])
+    gauth.LoadCredentialsFile("setting.yaml")
+    # gauth.LoadCredentialsFile(st.secrets["GoogleSpreadSheetKey"])
     
     # #Googleサービスの資格情報がない場合
     # if gauth.credentials is None:
