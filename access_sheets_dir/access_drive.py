@@ -1,8 +1,6 @@
 from lib2to3.pgen2.driver import Driver
 from pydrive.drive import GoogleDrive
 from pydrive.auth import GoogleAuth
-from google.oauth2.service_account import Credentials
-from googleapiclient.discovery import build
 import os
 import streamlit as st
 
@@ -14,7 +12,6 @@ def get_drive():
     # gauth.LoadCredentialsFile("mycreds.txt")
     # 認証(クラウド)
     gauth.LoadCredentialsFile("setting.yaml")
-    # gauth.LoadCredentialsFile(st.secrets["GoogleSpreadSheetKey"])
     
     # #Googleサービスの資格情報がない場合
     # if gauth.credentials is None:
@@ -89,7 +86,4 @@ if __name__ == "__main__":
     #templateシートID
     template_id = "1YCY_4u2vkq5WK281ei0b9gqdgqmM2TOX"
     
-    # new_folder = create_folder(drive, folder_id, "テスト")
-    # print(new_folder["id"])
     print(drive)
-    # print(get_files_drive_service(drive, team_drive_id, id))
