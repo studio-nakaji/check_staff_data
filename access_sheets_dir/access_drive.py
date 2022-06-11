@@ -1,5 +1,6 @@
 from pydrive.drive import GoogleDrive
 from pydrive.auth import GoogleAuth
+from google.oauth2 import service_account
 import os
 import streamlit as st
 
@@ -10,7 +11,11 @@ def get_drive():
     # 認証(ローカル)
     # gauth.LoadCredentialsFile("mycreds.txt")
     # 認証(クラウド)
-    gauth.LoadCredentialsFile("setting.yaml")
+    # gauth.LoadCredentialsFile("setting.yaml")
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    secrets = st.secrets["GoogleSpreadSheetKey"]
+    
+    gauth.credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
     
     # #Googleサービスの資格情報がない場合
     # if gauth.credentials is None:
