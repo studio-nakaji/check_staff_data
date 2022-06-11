@@ -13,7 +13,7 @@ def get_drive():
     # 認証(クラウド)
     # gauth.LoadCredentialsFile("setting.yaml")
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-    secrets = st.secrets["GoogleSpreadSheetKey"]
+    secrets = st.secrets["GoogleDriveKey"]
     
     gauth.credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
     
