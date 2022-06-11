@@ -1,5 +1,8 @@
+from lib2to3.pgen2.driver import Driver
 from pydrive.drive import GoogleDrive
 from pydrive.auth import GoogleAuth
+from google.oauth2.service_account import Credentials
+from googleapiclient.discovery import build
 import os
 import streamlit as st
 
@@ -7,27 +10,30 @@ def get_drive():
     gauth = GoogleAuth()
 
     #資格情報ロードするか、存在しない場合は空の資格情報を作成
+    # 認証(ローカル)
     # gauth.LoadCredentialsFile("mycreds.txt")
-    gauth.LoadCredentialsFile(st.secrets["GoogleDriveKey"])
-
-    #Googleサービスの資格情報がない場合
-    if gauth.credentials is None:
-        #ユーザーから認証コードを自動的に受信しローカルWebサーバーを設定
-        gauth.LocalWebserverAuth()
-    #アクセストークンが存在しないか、期限切れかの場合    
-    elif gauth.access_token_expired:
-        #Googleサービスを認証をリフレッシュする
-        gauth.Refresh()
-    #どちらにも一致しない場合    
-    else:
-        #Googleサービスを承認する
-        gauth.Authorize()
-    #資格情報をtxt形式でファイルに保存する  
-    gauth.SaveCredentialsFile("mycreds.txt") 
+    # 認証(クラウド)
+    # gauth.LoadCredentialsFile("setting.yaml")
+    gauth.LoadCredentialsFile(st.secrets["GoogleSpreadSheetKey"])
+    
+    # #Googleサービスの資格情報がない場合
+    # if gauth.credentials is None:
+    #     #ユーザーから認証コードを自動的に受信しローカルWebサーバーを設定
+    #     gauth.LocalWebserverAuth()
+    # #アクセストークンが存在しないか、期限切れかの場合    
+    # elif gauth.access_token_expired:
+    #     #Googleサービスを認証をリフレッシュする
+    #     gauth.Refresh()
+    # #どちらにも一致しない場合    
+    # else:
+    #     #Googleサービスを承認する
+    #     gauth.Authorize()
+    # #資格情報をtxt形式でファイルに保存する  
+    # gauth.SaveCredentialsFile("mycreds.txt") 
 
     drive = GoogleDrive(gauth)
     
-    return drive
+    return Driver
 
 
 #フォルダの作成(作成場所のid,作成フォルダ名)
@@ -77,10 +83,13 @@ if __name__ == "__main__":
     drive = get_drive()
     #特定のフォルダID
     folder_id = "1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY"
+    id = "1oS-QEa8CGaj_YnAjynuz1VZWxXQeuFgE"
     #共有ドライブID
     team_drive_id = "0ALoDSiRif-lvUk9PVA"
     #templateシートID
     template_id = "1YCY_4u2vkq5WK281ei0b9gqdgqmM2TOX"
     
-    new_folder = create_folder(drive, folder_id, "テスト")
-    print(new_folder["id"])
+    # new_folder = create_folder(drive, folder_id, "テスト")
+    # print(new_folder["id"])
+    print(drive)
+    # print(get_files_drive_service(drive, team_drive_id, id))
