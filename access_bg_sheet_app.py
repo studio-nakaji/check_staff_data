@@ -38,11 +38,11 @@ def main():
     select_year = left_col.selectbox("取得したい年は？",list(range(2022,year+1)))
     month = right_col.selectbox("取得したい月は？",range(1,13),index=default_month)
     drive = ad.get_drive()
-    st.write(drive)
     if st.button("全スタッフ分をPDF出力しましょう！"):
         st.write("出力がスタートされる")
-        l = ad.get_files_list(drive, "0ALoDSiRif-lvUk9PVA", "1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY")
-        st.write(l)
+        st.write(drive)
+        ad.create_folder(drive, "1-7iQ1qsxulqZGqbzS9sCRGPyuGxpU7AE", "テストフォルダー")
+        
     #     save_pdf(st, title,select_year,month)
         
     ##旧バージョン(個別にcsv書き出し)
