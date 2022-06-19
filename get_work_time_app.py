@@ -78,7 +78,7 @@ def main():
     else:
         work_dic = None
     for event in events:
-        event_day = datetime.date.fromisoformat(event["start"]["dateTime"])
+        event_day = datetime.datetime.fromisoformat(event["start"]["dateTime"]).date()
         # if event_day>today:
         ex1.write(event_day)
     
