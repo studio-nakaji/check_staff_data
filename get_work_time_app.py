@@ -78,7 +78,8 @@ def main():
     else:
         work_dic = None
     for event in events:
-        ex1.write(event["start"]["dateTime"])
+        if event["start"]["dateTime"]>today:
+            ex1.write(event["start"]["dateTime"])
     
     left_column, right_column = ex1.columns(2)
     max_hour=64
