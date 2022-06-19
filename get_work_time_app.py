@@ -78,7 +78,7 @@ def main():
     else:
         work_dic = None
     for event in events:
-        if event["start"]["dateTime"]>today:
+        if datetime.datetime.fromisoformat(event["start"]["dateTime"])>today:
             ex1.write(event["start"]["dateTime"])
     
     left_column, right_column = ex1.columns(2)
