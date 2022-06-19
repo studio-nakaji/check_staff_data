@@ -153,8 +153,9 @@ def main():
             total = 0
             if genre_box:
                 for s in multi_work_type:
+                    title = "[" + str(s) + "]"
                     for i in list(work_dic):
-                        if s in i:
+                        if title in i:
                             total += work_dic[i]
             else:
                 for i in multi_work_type:
