@@ -52,7 +52,7 @@ def main():
 
     st.title("Nスタアプリ")
     
-    ex1 = st.expander("一覧を取得")
+    ex1 = st.expander("一覧を取得",expanded=True)
     today = datetime.date.today()
     year = today.year
 
