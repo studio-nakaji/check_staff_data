@@ -79,8 +79,8 @@ def main():
         work_dic = None
     for event in events:
         event_day = datetime.datetime.fromisoformat(event["start"]["dateTime"]).date()
-        # if event_day>today:
-        ex1.write(event_day)
+        if event_day>today:
+            ex1.write(event_day)
     
     left_column, right_column = ex1.columns(2)
     max_hour=64
