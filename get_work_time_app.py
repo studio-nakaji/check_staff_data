@@ -141,17 +141,25 @@ def main():
     
     work_list = list(work_dic)
     #2022年1月以外を選択し、かつ取得した労働項目が0以上あれば
-    selection_list = [i.split("]")[0].split("[")[1] for i in work_list if "]" in i]
-    selection_list = list(set(selection_list))
-    work_list = work_list + selection_list
+    selection_list = list(set([i.split("]")[0].split("[")[1] for i in work_list if "]" in i]))
+    # selection_list = list(set(selection_list))
     if not(select_y == 2022 and select_m == 1) and len(work_list) > 0:
         ex2 = st.expander("選択した項目の合計時間を表示")
         ex2.write(selection_list)
         multi_work_type = ex2.multiselect(label="予定を選択",options=work_list)
+        genre_box = ex2.checkbox("ジャンルで選択",False)
         if len(multi_work_type)>0:
             total = 0
-            for i in multi_work_type:
-                total += work_dic[i]
+            if genre_box:
+                for i in multi_work_type:
+                    total += work_dic[i]
+            else:
+                total2 = sum([[work_dic[i] for i in list(work_dic) if s in i] for s in selection_list])
+                ex2.write(total2)
+                for s in selection_list:
+                    for i in list(work_dic):
+                        if s in i:
+                            total += work_dic[i]
             ex2.write(f"合計時間は[{total}]時間です！")
             time_money=ex2.checkbox("時給換算")
             if time_money:
