@@ -27,23 +27,25 @@ def get_events_value(events, email, today):
     # 指定月のイベントの開始・終了・タイトルを出力します
     work_dic = {}
     for event in events:
-        if "creator" in event:                      #イベントの作成者を取得
-            member_mail = event["creator"]["email"]
-        if "summary" in event:  #タイトルがあるものを処理
-            summary = event['summary']
-            if "作業meet" not in  summary and member_mail == email:          #作業meet以外
+        event_day = datetime.datetime.fromisoformat(event["start"]["dateTime"]).date()
+        if event_day <= today:  #今日以前のもののみ処理
+            if "creator" in event:                      #イベントの作成者を取得
+                member_mail = event["creator"]["email"]
+            if "summary" in event:  #タイトルがあるものを処理
+                summary = event['summary']
+                if "作業meet" not in  summary and member_mail == email:          #作業meet以外
+                    wark_time = get_time(event)
+                    if summary not in work_dic:      #辞書内に同様の作業がなければ
+                        work_dic[summary]=wark_time  #辞書に追加
+                    else:                               #なければ
+                        work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
+            else:
+                summary = "タイトルなし"
                 wark_time = get_time(event)
                 if summary not in work_dic:      #辞書内に同様の作業がなければ
                     work_dic[summary]=wark_time  #辞書に追加
                 else:                               #なければ
                     work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
-        else:
-            summary = "タイトルなし"
-            wark_time = get_time(event)
-            if summary not in work_dic:      #辞書内に同様の作業がなければ
-                work_dic[summary]=wark_time  #辞書に追加
-            else:                               #なければ
-                work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
     return work_dic
 def main():
     user_mail = "nkjmmai@studio-nakaji.com"
@@ -77,10 +79,6 @@ def main():
         work_dic = get_events_value(events,user_mail,today)     #eventsから辞書を取得{労働タイトル:労働時間}
     else:
         work_dic = None
-    for event in events:
-        event_day = datetime.datetime.fromisoformat(event["start"]["dateTime"]).date()
-        if event_day <= today:
-            ex1.write(event_day)
     
     left_column, right_column = ex1.columns(2)
     max_hour=64
