@@ -146,7 +146,7 @@ def main():
     selection_list = list(set([i.split("]")[0].split("[")[1] for i in work_list if "]" in i]))
     if not(select_y == 2022 and select_m == 1) and len(work_list) > 0:
         ex2 = st.expander("選択した項目の合計時間を表示")
-        genre_box = ex2.checkbox("ジャンルで選択",False)
+        genre_box = ex2.checkbox("ジャンルで選択",True)
         if genre_box:
             multi_work_type = ex2.multiselect(label="ジャンルを選択",options=selection_list)
         else:
