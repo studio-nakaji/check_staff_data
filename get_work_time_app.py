@@ -77,6 +77,7 @@ def main():
         work_dic = get_events_value(events,user_mail)
     else:
         work_dic = None
+    ex1.write(events)
 
     left_column, right_column = ex1.columns(2)
     max_hour=64
