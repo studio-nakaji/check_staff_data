@@ -1,7 +1,7 @@
-client_config_file: st.secrets["GoogleSpreadSheetKey"]
+client_config_file: access_gas.json
 
 save_credentials: False
 save_credentials_backend: file
-save_credentials_file: st.secrets["GoogleSpreadSheetKey"]
+save_credentials_file: access_gas.json
 
 get_refresh_token: True

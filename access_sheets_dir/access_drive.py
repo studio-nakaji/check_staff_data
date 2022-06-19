@@ -6,31 +6,45 @@ import streamlit as st
 
 def get_drive():
     gauth = GoogleAuth()
+    
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    # import json
+    # json_acct = json.loads("drive_secrets.json")
+    # print(json_acct)
 
     #資格情報ロードするか、存在しない場合は空の資格情報を作成
     # 認証(ローカル)
-    # gauth.LoadCredentialsFile("mycreds.txt")
-    # 認証(クラウド)
-    # gauth.LoadCredentialsFile("setting.yaml")
-    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
-    secrets = st.secrets["GoogleDriveKey"]
+    gauth.LoadCredentialsFile("mycreds.txt")
+    # import toml
+    # import json
+    # with open("../secrets.toml") as f:
+    #     secrets = toml.load(f)["GoogleDriveKey"]
+    #     j = json.dumps(secrets, indent=2)
+    # # 認証(クラウド)
+    # gauth.LoadCredentialsFile(j)
+    # secrets = st.secrets["GoogleDriveKey"]
+    # import toml
+    # with open("../secrets.toml") as f:
+    #     secrets = toml.load(f)["GoogleSpreadSheetKey"]
+    # secrets = st.secrets["GoogleDriveKey"]
     
-    gauth.credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
+    # credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
+    # gauth.credentials = service_account.Credentials.from_service_account_info(secrets, scopes=scope)
     
-    # #Googleサービスの資格情報がない場合
-    # if gauth.credentials is None:
-    #     #ユーザーから認証コードを自動的に受信しローカルWebサーバーを設定
-    #     gauth.LocalWebserverAuth()
-    # #アクセストークンが存在しないか、期限切れかの場合    
-    # elif gauth.access_token_expired:
-    #     #Googleサービスを認証をリフレッシュする
-    #     gauth.Refresh()
-    # #どちらにも一致しない場合    
-    # else:
-    #     #Googleサービスを承認する
-    #     gauth.Authorize()
-    # #資格情報をtxt形式でファイルに保存する  
-    # gauth.SaveCredentialsFile("mycreds.txt") 
+    #Googleサービスの資格情報がない場合
+    if gauth.credentials is None:
+        #ユーザーから認証コードを自動的に受信しローカルWebサーバーを設定
+        gauth.LocalWebserverAuth()
+    #アクセストークンが存在しないか、期限切れかの場合    
+    elif gauth.access_token_expired:
+        #Googleサービスを認証をリフレッシュする
+        gauth.Refresh()
+    #どちらにも一致しない場合    
+    else:
+        #Googleサービスを承認する
+        gauth.Authorize()
+    #資格情報をtxt形式でファイルに保存する  
+    gauth.SaveCredentialsFile("mycreds.txt") 
 
     drive = GoogleDrive(gauth)
     
@@ -84,10 +98,10 @@ if __name__ == "__main__":
     drive = get_drive()
     #特定のフォルダID
     folder_id = "1FL1SaR15Y5rVLHEXOJ2bgM6MkJ03hgxY"
-    id = "1oS-QEa8CGaj_YnAjynuz1VZWxXQeuFgE"
+    ID = "1EwP979EinsmcXs4l05ecKMJdg1WSKvqP"
     #共有ドライブID
     team_drive_id = "0ALoDSiRif-lvUk9PVA"
     #templateシートID
     template_id = "1YCY_4u2vkq5WK281ei0b9gqdgqmM2TOX"
-    
+    # folder = create_folder(drive, ID, "subfolder_name")
     print(drive)

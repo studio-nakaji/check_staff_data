@@ -1,7 +1,5 @@
 import gspread
 import pandas as pd
-
-# from oauth2client.service_account import ServiceAccountCredentials
 from google.oauth2 import service_account
 import streamlit as st
 
@@ -9,6 +7,7 @@ import streamlit as st
 def get_gc():
     scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
     # 認証情報設定(ローカル)
+    # import toml
     # with open("../secrets.toml") as f:
     #     secrets = toml.load(f)["GoogleSpreadSheetKey"]
     
@@ -71,11 +70,6 @@ def get_member(wb,title):
 
 
 def main(wb,title,worker,month):
-    # title = "すずめ"
-    # worker = "針﨑"
-    # month = 4
-
-    # wb = access_spread_sheet(SPREADSHEET_KEY)
     target_sh = get_sheet_valus(wb, title)      #指定の名前のシートを取得
 
     data = target_sh.get_all_values()           #全てのデータを取得
@@ -122,10 +116,8 @@ if __name__ == "__main__":
     # month = 4
     SPREADSHEET_KEY = '1fH75awI6NAOjUGoiuZlD4YsNs1cnXcyLA9wsJmNP5Lg'    #「背景スケジュールまとめ」スプレッドシート
     # new_df, reward_df = main(SPREADSHEET_KEY,title,worker,month)
-    # member,story_num = get_member(SPREADSHEET_KEY,title)
+    # member = get_member(SPREADSHEET_KEY,title)
     # print(new_df.set_index("Cut番号",drop=True))
-    wb = access_spread_sheet(SPREADSHEET_KEY)
-    print(wb)
     
     
 
