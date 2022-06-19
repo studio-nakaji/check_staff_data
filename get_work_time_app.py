@@ -23,13 +23,13 @@ def get_time(event):
         wark_time = 8                   #8時間に変更
     return wark_time
     
-def get_events_value(events,email):
+def get_events_value(events, email, today):
     # 指定月のイベントの開始・終了・タイトルを出力します
     work_dic = {}
     for event in events:
         if "creator" in event:                      #イベントの作成者を取得
             member_mail = event["creator"]["email"]
-        if "summary" in event:
+        if "summary" in event:  #タイトルがあるものを処理
             summary = event['summary']
             if "作業meet" not in  summary and member_mail == email:          #作業meet以外
                 wark_time = get_time(event)
@@ -72,13 +72,14 @@ def main():
 
     work_dic = cache_dic()
     work_dic.clear()
-    events = get_cal_report.get_gcal_main(select_y,select_m)
+    events = get_cal_report.get_gcal_main(select_y,select_m)    #指定の年月のイベントをGoogleカレンダーから取得
     if events != None:
-        work_dic = get_events_value(events,user_mail)
+        work_dic = get_events_value(events,user_mail,today)     #eventsから辞書を取得{労働タイトル:労働時間}
     else:
         work_dic = None
-    ex1.write(events)
-
+    for event in events:
+        ex1.write(event["start"])
+    
     left_column, right_column = ex1.columns(2)
     max_hour=64
     if len(list(work_dic))>0:
