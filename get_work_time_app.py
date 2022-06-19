@@ -143,7 +143,7 @@ def main():
     #2022年1月以外を選択し、かつ取得した労働項目が0以上あれば
     selection_list = [i.split("]")[0].split("[")[1] for i in work_list if "]" in i]
     selection_list = list(set(selection_list))
-    work_list = work_list.extend(selection_list)
+    work_list = work_list + selection_list
     if not(select_y == 2022 and select_m == 1) and len(work_list) > 0:
         ex2 = st.expander("選択した項目の合計時間を表示")
         ex2.write(selection_list)
