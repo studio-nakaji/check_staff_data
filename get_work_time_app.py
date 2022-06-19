@@ -147,7 +147,10 @@ def main():
         ex2 = st.expander("選択した項目の合計時間を表示")
         ex2.write(selection_list)
         genre_box = ex2.checkbox("ジャンルで選択",False)
-        multi_work_type = ex2.multiselect(label="予定を選択",options=work_list)
+        if genre_box:
+            multi_work_type = ex2.multiselect(label="予定を選択",options=selection_list)
+        else:
+            multi_work_type = ex2.multiselect(label="予定を選択",options=work_list)
         if len(multi_work_type)>0:
             total = 0
             if genre_box:
