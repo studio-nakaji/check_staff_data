@@ -4,6 +4,8 @@ import datetime
 import jpholiday
 import calendar as cal
 import time
+import requests
+import json
 
 def check_holiday(day):
     if day.weekday() >= 5 or jpholiday.is_holiday(day):
@@ -22,7 +24,7 @@ def get_time(event):
     if wark_time>23:                    #23時間以上なら(1日の予定なので)
         wark_time = 8                   #8時間に変更
     return wark_time
-    
+
 def get_events_value(events, email, today):
     # 指定月のイベントの開始・終了・タイトルを出力します
     work_dic = {}
@@ -47,6 +49,23 @@ def get_events_value(events, email, today):
                 else:                               #なければ
                     work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
     return work_dic
+
+def get_events_time_gas(data, today):
+    # 指定月のイベントの開始・終了・タイトルを出力します
+    work_dic = {}
+    for key in list(data):
+        event = data[key]
+        event_day = datetime.datetime.strptime(key, "%Y/%m/%d_%H:%M").date()
+        if event_day <= today:  #今日以前のもののみ処理
+            title = event['title']
+            wark_time = event["time"]
+            if wark_time<8: #8時間以下の予定のみ処理
+                if title not in work_dic:      #辞書内に同様の作業がなければ
+                    work_dic[title]=wark_time  #辞書に追加
+                else:                               #なければ
+                    work_dic[title]=work_dic[title]+wark_time #労働時間を加算
+    return work_dic
+
 def main():
     user_mail = "nkjmmai@studio-nakaji.com"
 
@@ -74,11 +93,22 @@ def main():
 
     work_dic = cache_dic()
     work_dic.clear()
-    events = get_cal_report.get_gcal_main(select_y,select_m)    #指定の年月のイベントをGoogleカレンダーから取得
-    if events != None:
-        work_dic = get_events_value(events,user_mail,today)     #eventsから辞書を取得{労働タイトル:労働時間}
-    else:
-        work_dic = None
+    
+    #カレンダー情報の取得
+    cal_url = "https://script.google.com/macros/s/AKfycbzjcYPypWS_HzvPb383Ydp6xFToVwYmu5O3QBs12n65p6_8Ww9nCO5Vx0deLxDkroA/exec"
+    #カレンダー名[中嶋 舞]のid
+    mai_cal_id = "c_pc8j2tb1hue45v4adq4g7t0tnc@group.calendar.google.com"
+    hareno_cal_id = "c_panu8s7v6pjlmqkqi8u6v19ii4@group.calendar.google.com"
+    year = 2022
+    month = 7
+    today = datetime.date.today()
+    
+    ##Gasでの取得
+    cal_post_data = {"id":mai_cal_id,"year":select_y,"month":select_m}
+    event_time_r = requests.post(cal_url,data= json.dumps(cal_post_data).encode('utf-8'))
+    #返り値：{"title":summary,"time":diff, "start":start, "end":end, "date":date}{タイトル,作業時間,開始時間,終了時間,日付}
+    event_time_data = json.loads(event_time_r.text)
+    work_dic = get_events_time_gas(event_time_data, today)
     
     left_column, right_column = ex1.columns(2)
     max_hour=64
