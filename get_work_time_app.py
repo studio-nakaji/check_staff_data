@@ -123,7 +123,7 @@ def main():
                 else:
                     column_1.write(f"{i}")
                     column_2.write(f"{work_dic[i]}　時間")
-            
+            count_hour = round(count_hour,1)
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
             wariai = round(count_hour/max_hour*100)
@@ -140,7 +140,7 @@ def main():
                 ex1.write(f"今月は{count_hour}時間作業されたのですね！")
                 ex1.write("")
                 if count_hour < max_hour:                   #作業時間が目標以下の時
-                    remaining_hour = max_hour-count_hour    #残り日数*8時間　>　残りの時間なら
+                    remaining_hour = round(max_hour-count_hour,1)    #残り日数*8時間　>　残りの時間なら
                     if remaining_days*8 > remaining_hour:
                         ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
                         ex1.write(f"今月の平日はあと{remaining_days}日なので・・・、")
@@ -160,7 +160,6 @@ def main():
                 else:
                     ex1.write(f"{month}月は{count_hour}時間作業されたのですね。")
                     ex1.write("お疲れ様でした！")
-                    ex1.write(f"count_hour{count_hour},max_hour{max_hour}")
                     if count_hour < max_hour:                   #作業時間が目標以下の時
                         remaining_hour = round(max_hour-count_hour,1)    #残り日数*8時間　>　残りの時間なら
                         ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間でした。")
