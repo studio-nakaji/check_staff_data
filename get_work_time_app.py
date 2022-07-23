@@ -173,14 +173,7 @@ def main():
     
     #2022年1月以外を選択し、かつ取得した労働項目が0以上あれば、合計時間を表示
     work_list = list(work_dic)
-    selection_list = []
-    for i in work_list:
-        if "]" in i:
-            selection_list.append(i.split("]")[0].split("[")[1])
-        else:
-            selection_list.append(i)
-    selection_list = list(set(selection_list))
-    # selection_list = list(set([i.split("]")[0].split("[")[1] for i in work_list if "]" in i]))
+    selection_list = list(set([i.split("]")[0].split("[")[1] for i in work_list if "]" in i]))
     if not(select_y == 2022 and select_m == 1) and len(work_list) > 0:
         ex2 = st.expander("選択した項目の合計時間を表示")
         genre_box = ex2.checkbox("ジャンルで選択",True)
