@@ -110,19 +110,21 @@ def main():
     event_time_data = json.loads(event_time_r.text)
     work_dic = get_events_time_gas(event_time_data, today)
     
-    left_column, right_column = ex1.columns(2)
+    column_1, column_2, column_3 = ex1.columns(3)
     max_hour=64
     if len(list(work_dic))>0:
         if work_dic != None:                #イベントが存在したら
             count_hour =0
             for i in work_dic:
                 if "予定" not in i:
-                    left_column.write(f"[{i}]を")
-                    right_column.write(f"{work_dic[i]}時間作業")
+                    column_1.write(f"[{i}]")
+                    column_2.write("・・・")
+                    column_3.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
                 else:
-                    left_column.write(f"[{i}]が")
-                    right_column.write(f"{work_dic[i]}時間")
+                    column_1.write(f"[{i}]")
+                    column_2.write("・・・")
+                    column_3.write(f"{work_dic[i]}時間")
             
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
