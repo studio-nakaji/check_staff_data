@@ -118,12 +118,12 @@ def main():
             for i in work_dic:
                 if "予定" not in i:
                     column_1.write(f"[{i}]")
-                    column_2.write("・・・")
+                    column_2.write("・・・・・→")
                     column_3.write(f"{work_dic[i]}時間作業")
                     count_hour += work_dic[i]
                 else:
                     column_1.write(f"[{i}]")
-                    column_2.write("・・・")
+                    column_2.write("・・・・・→")
                     column_3.write(f"{work_dic[i]}時間")
             
             #作業時間/目標時間をプログレスバーで表示
