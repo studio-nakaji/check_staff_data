@@ -117,14 +117,14 @@ def main():
             count_hour =0
             for i in work_dic:
                 if "予定" not in i:
-                    column_1.write(f"[{i}]")
-                    column_2.write("・・・・・→")
-                    column_3.write(f"{work_dic[i]}時間作業")
+                    column_1.write(f"{i}")
+                    column_2.write("・・・・・")
+                    column_3.write(f"{work_dic[i]}　時間作業")
                     count_hour += work_dic[i]
                 else:
-                    column_1.write(f"[{i}]")
-                    column_2.write("・・・・・→")
-                    column_3.write(f"{work_dic[i]}時間")
+                    column_1.write(f"{i}")
+                    column_2.write("・・・・・")
+                    column_3.write(f"{work_dic[i]}　時間")
             
             #作業時間/目標時間をプログレスバーで表示
             bar = ex1.progress(0)
@@ -151,9 +151,9 @@ def main():
                         ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間です。")
                         ex1.write(f"今月の平日はあと{remaining_days}日。{round(remaining_hour/remaining_days,1)}時間/1日作業。大変ですね。。")
                 elif count_hour < max_hour+10:              #作業時間が目標+10時間以内の時
-                    ex1.write(f"目標の時間を{count_hour-max_hour}時間超えているようです。頑張ってるんですね！")
+                    ex1.write(f"目標の時間を{round(count_hour-max_hour,1)}時間超えているようです。頑張ってるんですね！")
                 else:                                       #作業時間が目標+10時間以上の時
-                    ex1.write(f"もう目標の時間を{count_hour-max_hour}時間超えて働いていますよ！休まれては？")
+                    ex1.write(f"もう目標の時間を{round(count_hour-max_hour,1)}時間超えて働いていますよ！休まれては？")
                 
             else:
                 month = select_m
@@ -166,9 +166,9 @@ def main():
                         remaining_hour = max_hour-count_hour    #残り日数*8時間　>　残りの時間なら
                         ex1.write(f"目標の{max_hour}時間まであと{remaining_hour}時間でした。")
                     elif count_hour < max_hour+10:              #作業時間が目標+10時間以内の時
-                        ex1.write(f"目標を{count_hour-max_hour}時間超えていたようです。頑張ったんですね！")
+                        ex1.write(f"目標を{round(count_hour-max_hour,1)}時間超えていたようです。頑張ったんですね！")
                     else:                                       #作業時間が目標+10時間以上の時
-                        ex1.write(f"目標を{count_hour-max_hour}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
+                        ex1.write(f"目標を{round(count_hour-max_hour,1)}時間も超えて働いたようです！身体の調子は大丈夫ですか？")
                 
         else:
             st.write("おっと、指定の期間中にはデータが見当たらないようです・・・。")
