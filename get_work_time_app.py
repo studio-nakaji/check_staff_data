@@ -16,38 +16,6 @@ def daterange(_start, _end):
     for n in range((_end - _start).days):
         yield _start + datetime.timedelta(n)
 
-def get_time(event):
-    start = datetime.datetime.fromisoformat(event['start'].get('dateTime', event['start'].get('date')))
-    end = datetime.datetime.fromisoformat(event['end'].get('dateTime', event['end'].get('date')))
-    wark_time = (end-start)/datetime.timedelta(hours=1)
-    if wark_time>23:                    #23時間以上なら(1日の予定なので)
-        wark_time = 8                   #8時間に変更
-    return wark_time
-
-def get_events_value(events, email, today):
-    # 指定月のイベントの開始・終了・タイトルを出力します
-    work_dic = {}
-    for event in events:
-        event_day = datetime.datetime.fromisoformat(event["start"]["dateTime"]).date()
-        if event_day <= today:  #今日以前のもののみ処理
-            if "creator" in event:                      #イベントの作成者を取得
-                member_mail = event["creator"]["email"]
-            if "summary" in event:  #タイトルがあるものを処理
-                summary = event['summary']
-                if "作業meet" not in  summary and member_mail == email:          #作業meet以外
-                    wark_time = get_time(event)
-                    if summary not in work_dic:      #辞書内に同様の作業がなければ
-                        work_dic[summary]=wark_time  #辞書に追加
-                    else:                               #なければ
-                        work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
-            else:
-                summary = "タイトルなし"
-                wark_time = get_time(event)
-                if summary not in work_dic:      #辞書内に同様の作業がなければ
-                    work_dic[summary]=wark_time  #辞書に追加
-                else:                               #なければ
-                    work_dic[summary]=work_dic[summary]+wark_time #労働時間を加算
-    return work_dic
 
 def get_events_time_gas(data, today):
     # 指定月のイベントの開始・終了・タイトルを出力します
