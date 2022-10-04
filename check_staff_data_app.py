@@ -89,6 +89,8 @@ def login_page ():
             prefectures = sb.selectbox("都道府県",prefectures_list)
             #以降の住所
             address = sb.text_input("以降の住所",help="建物名・部屋番号まで入力して下さい")
+            #銀行口座情報
+            bankNumber = sb.text("銀行口座情報(登録者と別名義の口座もOK)")
             #銀行名
             bank_dic = {row[0]:row[1] for row in csv.reader(open("_csv/bank_code.csv","r"))}
             bankCode = bank_dic[sb.selectbox("銀行名",bank_dic.keys())]
@@ -97,16 +99,24 @@ def login_page ():
             bankSubject = sb.selectbox("科目",["普通","当座"])
             #口座番号
             bankNumber = sb.text_input("口座番号")
-            #サインインボタン
-            sign_in_button = sb.button("サインイン")
+            #口座名義
+            bankNumber = sb.text("口座名義")
+            bank_family, bank_first = sb.columns(2)
+            bank_family_name = bank_family.text_input("姓")
+            bank_first_name = bank_first.text_input("名")
+            bank_full_name = bank_family_name + " " + bank_first_name
+            #口座名義カナ
+            bank_kana_name = sb.text_input("口座名義(カナ)")
+            #サインアップボタン
+            sign_up_button = sb.button("サインアップ")
             sb.text("")
-            if sign_in_button:
-                checkes = [mail, pw, full_name, bizName, tel, postCode, prefectures, address, bankCode, branchCode, bankSubject, bankNumber]
+            if sign_up_button:
+                checkes = [mail, pw, full_name, bizName, tel, postCode, prefectures, address, bankCode, branchCode, bankSubject, bankNumber, bank_full_name, bank_kana_name]
                 if "" in checkes:
                     sb.text("情報が不足しています")
                 else:
                     pw = make_hashes(pw)
-                    post_data = {"type":"sign_up","mail":mail,"password":pw,"full_name":full_name,"bizName":bizName,"tel":tel,"postCode":postCode,"prefectures":prefectures,"address":address,"bankCode":bankCode,"branchCode":branchCode,"bankSubject":bankSubject,"bankNumber":bankNumber}
+                    post_data = {"type":"sign_up","mail":mail,"password":pw,"full_name":full_name,"bizName":bizName,"tel":tel,"postCode":postCode,"prefectures":prefectures,"address":address,"bankCode":bankCode,"branchCode":branchCode,"bankSubject":bankSubject,"bankNumber":bankNumber,"bankName":bank_full_name,"bankKanaName":bank_kana_name}
                     print(f"Post data =>{post_data}")
                     event_time_r = requests.post(api_url,data= json.dumps(post_data).encode('utf-8'))
                     data = json.loads(event_time_r.text)
