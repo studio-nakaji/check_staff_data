@@ -65,7 +65,7 @@ def login_page ():
             #メール
             mail = sb.text_input("メールアドレス",help="nakaji@studio-nakaji.com")
             #パスワード
-            pw = sb.text_input("パスワード",type="password")
+            pw = str(sb.text_input("パスワード",type="password"))
             #姓名
             family, first = sb.columns(2)
             family_name = family.text_input("姓",placeholder="中島",help="請求書の宛名に使用します")
@@ -83,7 +83,7 @@ def login_page ():
             post_1,post_2 = sb.columns(2)
             post_1_num = post_1.text_input("郵便番号",placeholder="180")
             post_2_num = post_2.text_input("",placeholder="0014")
-            postCode = post_1_num + "-" + post_2_num
+            postCode = str(post_1_num + "-" + post_2_num)
             #都道府県
             prefectures_list = [row[0] for row in csv.reader(open("_csv/prefectures_code.csv","r"))]
             prefectures = sb.selectbox("都道府県",prefectures_list)
@@ -94,19 +94,19 @@ def login_page ():
             #銀行名
             bank_dic = {row[0]:row[1] for row in csv.reader(open("_csv/bank_code.csv","r"))}
             bankCode = bank_dic[sb.selectbox("銀行名",bank_dic.keys())]
-            branchCode = sb.text_input("支店コード")
+            branchCode = str(sb.text_input("支店コード"))
             #口座科目
             bankSubject = sb.selectbox("科目",["普通","当座"])
             #口座番号
-            bankNumber = sb.text_input("口座番号")
+            bankNumber = str(sb.text_input("口座番号"))
             #口座名義
             bankNumber = sb.text("口座名義")
             bank_family, bank_first = sb.columns(2)
             bank_family_name = bank_family.text_input("姓")
             bank_first_name = bank_first.text_input("名")
-            bank_full_name = bank_family_name + " " + bank_first_name
+            bank_full_name = str(bank_family_name + " " + bank_first_name)
             #口座名義カナ
-            bank_kana_name = sb.text_input("口座名義(カナ)")
+            bank_kana_name = str(sb.text_input("口座名義(カナ)"))
             #サインアップボタン
             sign_up_button = sb.button("サインアップ")
             sb.text("")
